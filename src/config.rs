@@ -1,3 +1,4 @@
+//SOS模式
 use std::{
     collections::{HashMap, HashSet},
     fs,
@@ -121,7 +122,7 @@ lazy_static::lazy_static! {
         //密码验证方式，use-temporary-password：一次性密码，use-permanent-password：固定密码，use-both-passwords：同时使用
         map.insert("verification-method".to_string(), "use-permanent-password".to_string());
         //隐藏连接管理窗口，approve-mode=password，verification-method=use-permanent-password，才可生效，项目中有修复代码
-        map.insert("allow-hide-cm".to_string(), "N".to_string());
+        map.insert("allow-hide-cm".to_string(), "Y".to_string());
         //隐藏托盘图标，approve-mode=password，verification-method=use-permanent-password，才可生效，项目中有修复代码
         map.insert("hide-tray".to_string(), "N".to_string());
         RwLock::new(map)
@@ -2073,7 +2074,7 @@ impl UserDefaultConfig {
             keys::OPTION_CUSTOM_FPS => self.get_num_string(key, 30.0, 5.0, 120.0),
             keys::OPTION_ENABLE_FILE_COPY_PASTE => self.get_string(key, "Y", vec!["", "N"]),
             keys::OPTION_TRACKPAD_SPEED => self.get_num_string(key, 100, 10, 1000),
-             // 修改，真彩 4:4:4 默认开启
+            // 修改，真彩 4:4:4 默认开启
             keys::OPTION_I444 => {
                 let v = self.get_after(key).map(|v| v.to_string()).unwrap_or_default();
                 if v.is_empty() {
@@ -2086,8 +2087,6 @@ impl UserDefaultConfig {
                 let v = self.get_after(key).map(|v| v.to_string()).unwrap_or_default();
                 if v.is_empty() {
                     return "Y".to_string();
-                }
-                return v;
             }
             // 修改，默认开启触屏模式（未生效？？）
             keys::OPTION_TOUCH_MODE => {
@@ -2097,6 +2096,8 @@ impl UserDefaultConfig {
                 }
             return v;
             }    
+                return v;
+            }
             _ => self
                 .get_after(key)
                 .map(|v| v.to_string())
@@ -2483,17 +2484,17 @@ fn is_option_can_save(
 }
 
 #[inline]
-pub fn is_incoming_only() -> bool {
-    HARD_SETTINGS
-        .read()
-        .unwrap()
-        .get("conn-type")
-        .map_or(false, |x| x == ("incoming"))
-}
-
 //pub fn is_incoming_only() -> bool {
-//true  修改为被控模式
+    //HARD_SETTINGS
+      //  .read()
+     //   .unwrap()
+     //   .get("conn-type")
+   //     .map_or(false, |x| x == ("incoming"))
 //}
+
+pub fn is_incoming_only() -> bool {
+true// 修改为被控模式
+}
 
 #[inline]
 pub fn is_outgoing_only() -> bool {
