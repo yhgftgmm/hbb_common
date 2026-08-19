@@ -2087,17 +2087,17 @@ impl UserDefaultConfig {
                 let v = self.get_after(key).map(|v| v.to_string()).unwrap_or_default();
                 if v.is_empty() {
                     return "Y".to_string();
+            }  
+                return v;
             }
-            // 修改，默认开启触屏模式（未生效？？）
+           // 修改，默认开启触屏模式（未生效？？）
             keys::OPTION_TOUCH_MODE => {
             let v = self.get_after(key).map(|v| v.to_string()).unwrap_or_default();
             if v.is_empty() {
                 return "Y".to_string();
                 }
             return v;
-            }    
-                return v;
-            }
+            }  
             _ => self
                 .get_after(key)
                 .map(|v| v.to_string())
