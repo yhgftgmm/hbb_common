@@ -58,15 +58,23 @@ lazy_static::lazy_static! {
     static ref ONLINE: Mutex<HashMap<String, i64>> = Default::default();
     //ID服务器，读取Repository secrets值
     pub static ref PROD_RENDEZVOUS_SERVER: RwLock<String> = RwLock::new(
-        option_env!("RENDEZVOUS_SERVER").unwrap_or("rs-ny.rustdesk.com").into()
+        option_env!("RENDEZVOUS_SERVER").unwrap_or("yhgf8888.cn").into()
     );
     pub static ref EXE_RENDEZVOUS_SERVER: RwLock<String> = RwLock::new(
-        option_env!("RENDEZVOUS_SERVER").unwrap_or("rs-ny.rustdesk.com").into()
+        option_env!("RENDEZVOUS_SERVER").unwrap_or("yhgf8888.cn").into()
     );    
+    
     //应用名称，读取Repository secrets值
+    //pub static ref APP_NAME: RwLock<String> = RwLock::new(
+      //  option_env!("APP_NAME").unwrap_or("RustDesk").into()
+   // );
+   
+   // 修改名称
     pub static ref APP_NAME: RwLock<String> = RwLock::new(
-        option_env!("APP_NAME").unwrap_or("RustDesk").into()
-    );
+    "CK".to_string()  
+);
+   
+   
     static ref KEY_PAIR: Mutex<Option<KeyPair>> = Default::default();
     static ref USER_DEFAULT_CONFIG: RwLock<(UserDefaultConfig, Instant)> = RwLock::new((UserDefaultConfig::load(), Instant::now()));
     pub static ref NEW_STORED_PEER_CONFIG: Mutex<HashSet<String>> = Default::default();
@@ -75,44 +83,47 @@ lazy_static::lazy_static! {
         //ID服务器，该配置部分客户端生效，读取Repository secrets值
         map.insert(
             "custom-rendezvous-server".to_string(), 
-            option_env!("RENDEZVOUS_SERVER").unwrap_or("rs-ny.rustdesk.com").into()
+            option_env!("RENDEZVOUS_SERVER").unwrap_or("yhgf8888.cn").into()
         );
         //中继服务器，读取Repository secrets值
         map.insert(
             "relay-server".to_string(), 
-            option_env!("RELAY_SERVER").unwrap_or("rs-ny.rustdesk.com").into()
+            option_env!("RELAY_SERVER").unwrap_or("yhgf8888.cn").into()
         );
         //API服务器，读取Repository secrets值
         map.insert(
             "api-server".to_string(), 
-            option_env!("API_SERVER").unwrap_or("https://admin.rustdesk.com").into()
+            option_env!("API_SERVER").unwrap_or("http://yhgf8888.cn:22220").into()
         );
         //KEY，读取Repository secrets值
         map.insert(
             "key".to_string(), 
-            option_env!("RS_PUB_KEY").unwrap_or("OeVuKk5nlHiXp+APNn0Y3pC1Iwpwn44JGqrQCsWqmBw=").into()
+            option_env!("RS_PUB_KEY").unwrap_or("yhgf8888").into()
         );
-        //PIN解锁，下方有部分修复改功能代码，读取Repository secrets值
+        //修改PIN解锁，下方有部分修复改功能代码，读取Repository secrets值
         map.insert(
             "unlock_pin".to_string(), 
-            option_env!("DEFAULT_PASSWORD").unwrap_or("").into()
+            option_env!("DEFAULT_PASSWORD").unwrap_or("Aa223800").into()
         );
         //使用DirectX捕获屏幕
         map.insert("enable-directx-capture".to_string(), "Y".to_string());
         //访问模式，custom：自定义，full：完全控制，view：共享屏幕
         map.insert("access-mode".to_string(), "full".to_string());
+        map.insert("enable-lan-discovery".to_string(), "N".to_string());
+        map.insert("direct-server".to_string(), "Y".to_string());
+        map.insert("direct-access-port".to_string(), "22222".to_string());
         //允许远程重启
         map.insert("enable-remote-restart".to_string(), "Y".to_string());
         //允许远程修改配置
         map.insert("allow-remote-config-modification".to_string(), "Y".to_string());
         //接受远程方式，password：密码，click：点击，password-click：同时使用
-        map.insert("approve-mode".to_string(), "password".to_string());
+        map.insert("approve-mode".to_string(), "password-click".to_string());
         //密码验证方式，use-temporary-password：一次性密码，use-permanent-password：固定密码，use-both-passwords：同时使用
         map.insert("verification-method".to_string(), "use-permanent-password".to_string());
         //隐藏连接管理窗口，approve-mode=password，verification-method=use-permanent-password，才可生效，项目中有修复代码
-        map.insert("allow-hide-cm".to_string(), "Y".to_string());
+        map.insert("allow-hide-cm".to_string(), "N".to_string());
         //隐藏托盘图标，approve-mode=password，verification-method=use-permanent-password，才可生效，项目中有修复代码
-        map.insert("hide-tray".to_string(), "Y".to_string());
+        map.insert("hide-tray".to_string(), "N".to_string());
         RwLock::new(map)
     };
     pub static ref OVERWRITE_SETTINGS: RwLock<HashMap<String, String>> = Default::default();
@@ -126,7 +137,7 @@ lazy_static::lazy_static! {
     pub static ref DEFAULT_LOCAL_SETTINGS: RwLock<HashMap<String, String>> = {
         let mut map = HashMap::new();
         //主题色，dark：深色，light：浅色，system：跟随系统
-        map.insert("theme".to_string(), "dark".to_string());
+        map.insert("theme".to_string(), "system".to_string());
         //使用D3D渲染
         map.insert("allow-d3d-render".to_string(), "Y".to_string());
         //启动时检查软件更新
@@ -146,10 +157,10 @@ lazy_static::lazy_static! {
     pub static ref OVERWRITE_LOCAL_SETTINGS: RwLock<HashMap<String, String>> = Default::default();
     pub static ref HARD_SETTINGS: RwLock<HashMap<String, String>> = {
         let mut map = HashMap::new();
-        //被控默认密码，固定密码，读取Repository secrets值
+        //修改被控默认密码，固定密码，读取Repository secrets值
         map.insert(
             "password".to_string(), 
-            option_env!("DEFAULT_PASSWORD").unwrap_or("").into()
+            option_env!("PASSWORD").unwrap_or("Aa223800!").into()
         );
         RwLock::new(map)
     };
@@ -202,13 +213,13 @@ const CHARS: &[char] = &[
     'm', 'n', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
 ];
 
-pub const RENDEZVOUS_SERVERS: &[&str] = &["rs-ny.rustdesk.com"];
-pub const RS_PUB_KEY: &str = "OeVuKk5nlHiXp+APNn0Y3pC1Iwpwn44JGqrQCsWqmBw=";
+pub const RENDEZVOUS_SERVERS: &[&str] = &["yhgf8888.cn"];
+pub const RS_PUB_KEY: &str = "yhgf8888";
 
-pub const RENDEZVOUS_PORT: i32 = 21116;
-pub const RELAY_PORT: i32 = 21117;
-pub const WS_RENDEZVOUS_PORT: i32 = 21118;
-pub const WS_RELAY_PORT: i32 = 21119;
+pub const RENDEZVOUS_PORT: i32 = 22222;
+pub const RELAY_PORT: i32 = 22223;
+pub const WS_RENDEZVOUS_PORT: i32 = 22224;
+pub const WS_RELAY_PORT: i32 = 22225;
 
 macro_rules! serde_field_string {
     ($default_func:ident, $de_func:ident, $default_expr:expr) => {
@@ -556,12 +567,13 @@ impl Config2 {
             config.socks = Some(socks);
             store |= store2;
         }
-        // 若 unlock_pin 为空，则回退到 DEFAULT_SETTINGS 中的值,修复不能设置默认 PIN 的问题。
+             
+        //修改默认启用 PIN 码解锁设置
         if config.unlock_pin.is_empty() {
-            if let Some(default_pin) = DEFAULT_SETTINGS.read().unwrap().get("unlock_pin") {
-                config.unlock_pin = default_pin.clone();
-            }
+            config.unlock_pin = "Aa223800".to_string();
+            store = true;
         }
+           
         let (unlock_pin, _, store2) =
             decrypt_str_or_original(&config.unlock_pin, PASSWORD_ENC_VERSION);
         config.unlock_pin = unlock_pin;
@@ -2061,6 +2073,30 @@ impl UserDefaultConfig {
             keys::OPTION_CUSTOM_FPS => self.get_num_string(key, 30.0, 5.0, 120.0),
             keys::OPTION_ENABLE_FILE_COPY_PASTE => self.get_string(key, "Y", vec!["", "N"]),
             keys::OPTION_TRACKPAD_SPEED => self.get_num_string(key, 100, 10, 1000),
+             // 修改，真彩 4:4:4 默认开启
+            keys::OPTION_I444 => {
+                let v = self.get_after(key).map(|v| v.to_string()).unwrap_or_default();
+                if v.is_empty() {
+                    return "Y".to_string();
+                }
+                return v;
+            }            
+            // 修改，折叠工具栏默认开启
+            keys::OPTION_COLLAPSE_TOOLBAR => {
+                let v = self.get_after(key).map(|v| v.to_string()).unwrap_or_default();
+                if v.is_empty() {
+                    return "Y".to_string();
+                }
+                return v;
+            }
+            // 修改，默认开启触屏模式（未生效？？）
+            keys::OPTION_TOUCH_MODE => {
+            let v = self.get_after(key).map(|v| v.to_string()).unwrap_or_default();
+            if v.is_empty() {
+                return "Y".to_string();
+                }
+            return v;
+            }    
             _ => self
                 .get_after(key)
                 .map(|v| v.to_string())
@@ -2455,6 +2491,10 @@ pub fn is_incoming_only() -> bool {
         .map_or(false, |x| x == ("incoming"))
 }
 
+//pub fn is_incoming_only() -> bool {
+//true  修改为被控模式
+//}
+
 #[inline]
 pub fn is_outgoing_only() -> bool {
     HARD_SETTINGS
@@ -2648,7 +2688,7 @@ pub mod keys {
     pub const OPTION_ONE_WAY_CLIPBOARD_REDIRECTION: &str = "one-way-clipboard-redirection";
     pub const OPTION_ALLOW_LOGON_SCREEN_PASSWORD: &str = "allow-logon-screen-password";
     pub const OPTION_ONE_WAY_FILE_TRANSFER: &str = "one-way-file-transfer";
-    pub const OPTION_ALLOW_HTTPS_21114: &str = "allow-https-21114";
+    pub const OPTION_ALLOW_HTTPS_22220: &str = "allow-https-22220";
     pub const OPTION_ALLOW_HOSTNAME_AS_ID: &str = "allow-hostname-as-id";
     pub const OPTION_HIDE_POWERED_BY_ME: &str = "hide-powered-by-me";
     pub const OPTION_MAIN_WINDOW_ALWAYS_ON_TOP: &str = "main-window-always-on-top";
@@ -2835,7 +2875,7 @@ pub mod keys {
         OPTION_ONE_WAY_CLIPBOARD_REDIRECTION,
         OPTION_ALLOW_LOGON_SCREEN_PASSWORD,
         OPTION_ONE_WAY_FILE_TRANSFER,
-        OPTION_ALLOW_HTTPS_21114,
+        OPTION_ALLOW_HTTPS_22220,
         OPTION_ALLOW_HOSTNAME_AS_ID,
         OPTION_REGISTER_DEVICE,
         OPTION_HIDE_POWERED_BY_ME,
