@@ -1,4 +1,3 @@
-//SOS模式
 use std::{
     collections::{HashMap, HashSet},
     fs,
@@ -138,7 +137,7 @@ lazy_static::lazy_static! {
     pub static ref DEFAULT_LOCAL_SETTINGS: RwLock<HashMap<String, String>> = {
         let mut map = HashMap::new();
         //主题色，dark：深色，light：浅色，system：跟随系统
-        map.insert("theme".to_string(), "dark".to_string());
+        map.insert("theme".to_string(), "system".to_string());
         //使用D3D渲染
         map.insert("allow-d3d-render".to_string(), "Y".to_string());
         //启动时检查软件更新
@@ -2090,6 +2089,14 @@ impl UserDefaultConfig {
                 }
                 return v;
             }
+            // 修改，默认开启触屏模式（未生效？？）
+            keys::OPTION_TOUCH_MODE => {
+            let v = self.get_after(key).map(|v| v.to_string()).unwrap_or_default();
+            if v.is_empty() {
+                return "Y".to_string();
+                }
+            return v;
+            }    
             _ => self
                 .get_after(key)
                 .map(|v| v.to_string())
@@ -2476,17 +2483,17 @@ fn is_option_can_save(
 }
 
 #[inline]
-//pub fn is_incoming_only() -> bool {
- //   HARD_SETTINGS
-   //     .read()
-    //    .unwrap()
-     //   .get("conn-type")
-      //  .map_or(false, |x| x == ("incoming"))
-//}
-
 pub fn is_incoming_only() -> bool {
-    true  // 修改为被控模式
+    HARD_SETTINGS
+        .read()
+        .unwrap()
+        .get("conn-type")
+        .map_or(false, |x| x == ("incoming"))
 }
+
+//pub fn is_incoming_only() -> bool {
+//    true  // 修改为被控模式
+//}
 
 #[inline]
 pub fn is_outgoing_only() -> bool {
