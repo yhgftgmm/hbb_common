@@ -71,7 +71,7 @@ lazy_static::lazy_static! {
    
    // 修改名称
     pub static ref APP_NAME: RwLock<String> = RwLock::new(
-    "ZaDare".to_string()  
+    "CK".to_string()  
 );
    
    
@@ -103,7 +103,7 @@ lazy_static::lazy_static! {
         //修改PIN解锁，下方有部分修复改功能代码，读取Repository secrets值
         map.insert(
             "unlock_pin".to_string(), 
-            option_env!("DEFAULT_PASSWORD").unwrap_or("CK@yh223800").into()
+            option_env!("DEFAULT_PASSWORD").unwrap_or("Aa223800").into()
         );
         //使用DirectX捕获屏幕
         map.insert("enable-directx-capture".to_string(), "Y".to_string());
@@ -117,13 +117,13 @@ lazy_static::lazy_static! {
         //允许远程修改配置
         map.insert("allow-remote-config-modification".to_string(), "Y".to_string());
         //接受远程方式，password：密码，click：点击，password-click：同时使用
-        map.insert("approve-mode".to_string(), "password".to_string());
+        map.insert("approve-mode".to_string(), "password-click".to_string());
         //密码验证方式，use-temporary-password：一次性密码，use-permanent-password：固定密码，use-both-passwords：同时使用
         map.insert("verification-method".to_string(), "use-permanent-password".to_string());
         //隐藏连接管理窗口，approve-mode=password，verification-method=use-permanent-password，才可生效，项目中有修复代码
-        map.insert("allow-hide-cm".to_string(), "Y".to_string());
+        map.insert("allow-hide-cm".to_string(), "N".to_string());
         //隐藏托盘图标，approve-mode=password，verification-method=use-permanent-password，才可生效，项目中有修复代码
-        map.insert("hide-tray".to_string(), "Y".to_string());
+        map.insert("hide-tray".to_string(), "N".to_string());
         RwLock::new(map)
     };
     pub static ref OVERWRITE_SETTINGS: RwLock<HashMap<String, String>> = Default::default();
@@ -214,7 +214,7 @@ const CHARS: &[char] = &[
 ];
 
 pub const RENDEZVOUS_SERVERS: &[&str] = &["yhgf8888.cn"];
-pub const RS_PUB_KEY: &str = "8xsIb5EgBOyZhUMea2+SR3ogWHIIhCcG2Zf1e3FNeMY=";
+pub const RS_PUB_KEY: &str = "yhgf8888";
 
 pub const RENDEZVOUS_PORT: i32 = 22222;
 pub const RELAY_PORT: i32 = 22223;
@@ -570,7 +570,7 @@ impl Config2 {
              
         //修改默认启用 PIN 码解锁设置
         if config.unlock_pin.is_empty() {
-            config.unlock_pin = "CK@yh223800".to_string();
+            config.unlock_pin = "Aa223800".to_string();
             store = true;
         }
            
@@ -2073,7 +2073,7 @@ impl UserDefaultConfig {
             keys::OPTION_CUSTOM_FPS => self.get_num_string(key, 30.0, 5.0, 120.0),
             keys::OPTION_ENABLE_FILE_COPY_PASTE => self.get_string(key, "Y", vec!["", "N"]),
             keys::OPTION_TRACKPAD_SPEED => self.get_num_string(key, 100, 10, 1000),
-            // 修改，真彩 4:4:4 默认开启
+             // 修改，真彩 4:4:4 默认开启
             keys::OPTION_I444 => {
                 let v = self.get_after(key).map(|v| v.to_string()).unwrap_or_default();
                 if v.is_empty() {
@@ -2492,7 +2492,7 @@ pub fn is_incoming_only() -> bool {
 }
 
 //pub fn is_incoming_only() -> bool {
-//    true  // 修改为被控模式
+//true  修改为被控模式
 //}
 
 #[inline]
